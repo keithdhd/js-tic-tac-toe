@@ -1,0 +1,30 @@
+{
+  "name": "js-tic-tac-toe",
+  "version": "0.0.1",
+  "description": "VanillaJS version of tic tac toe",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Keith Douglas",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keithdhd/js-tic-tac-toe.git"
+  },
+  "keywords": [
+    "tic",
+    "tac",
+    "toe",
+    "javascript"
+  ],
+  "bugs": {
+    "url": "https://github.com/keithdhd/js-tic-tac-toe/issues"
+  },
+  "homepage": "https://github.com/keithdhd/js-tic-tac-toe#readme"
+}
