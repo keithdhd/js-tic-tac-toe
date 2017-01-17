@@ -5,7 +5,6 @@ var view = {
   setUp: function(board){
     this.container = document.querySelector('#app');
     this.container.appendChild(document.createElement('ul'));
-    console.log(this.container);
 
     board.state.forEach((arr, index) => {
       this.arrayToRow(arr, board);
