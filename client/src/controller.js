@@ -14,18 +14,20 @@ var controller = {
 
   onPlay: function(chosenSquare) {
     this.board.setState(this.currentPlayer, chosenSquare);
+
     this.winChecker.checkForWin(this.board, function(){
-      console.log(this);
+      // console.log(this);
     }.bind(this));
-    this.switchPlayer();
+
+    this.currentPlayer = this.switchPlayer(this.currentPlayer);
   },
 
-  switchPlayer: function(){
-    if(this.currentPlayer === 'x') {
-      this.currentPlayer = 'o';
+  switchPlayer: function(current){
+    if(current === 'x') {
+      return 'o';
     }
     else{
-      this.currentPlayer = 'x';
+      return 'x';
     };
   }
 

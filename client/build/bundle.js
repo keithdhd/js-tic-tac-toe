@@ -74,6 +74,10 @@
 	
 	  setState: function(currentPlayer, chosenSquare){
 	    console.log(currentPlayer + " on " + chosenSquare);
+	    var flattenedBoard = [].concat.apply([], this.state);
+	    flattenedBoard[chosenSquare] = currentPlayer;
+	    this.state = flattenedBoard;
+	    console.log("this.state", this.state);
 	  }
 	
 	}
@@ -100,18 +104,20 @@
 	
 	  onPlay: function(chosenSquare) {
 	    this.board.setState(this.currentPlayer, chosenSquare);
+	
 	    this.winChecker.checkForWin(this.board, function(){
-	      console.log(this);
+	      // console.log(this);
 	    }.bind(this));
-	    this.switchPlayer();
+	
+	    this.currentPlayer = this.switchPlayer(this.currentPlayer);
 	  },
 	
-	  switchPlayer: function(){
-	    if(this.currentPlayer === 'x') {
-	      this.currentPlayer = 'o';
+	  switchPlayer: function(current){
+	    if(current === 'x') {
+	      return 'o';
 	    }
 	    else{
-	      this.currentPlayer = 'x';
+	      return 'x';
 	    };
 	  }
 	
@@ -129,7 +135,7 @@
 	
 	  setUp: function(board){
 	    this.container = document.querySelector('#app');
-	    this.container.appendChild(document.createElement('ul'));
+	    this.container.innerHTML = '';
 	
 	    board.state.forEach((arr, index) => {
 	      this.arrayToRow(arr, board);
@@ -137,9 +143,9 @@
 	
 	  },
 	
-	  arrayToRow: function(arr, board){
+	  arrayToRow: function(arr){
 	    var row = document.createElement('div');
-	
+	    console.log(arr);
 	    for(let element of arr){
 	      let span = document.createElement('span');
 	      span.className = 'square';

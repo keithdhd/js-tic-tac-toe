@@ -13,6 +13,10 @@ var board = {
 
   setState: function(currentPlayer, chosenSquare){
     console.log(currentPlayer + " on " + chosenSquare);
+    var flattenedBoard = [].concat.apply([], this.state);
+    flattenedBoard[chosenSquare] = currentPlayer;
+    this.state = flattenedBoard;
+    console.log("this.state", this.state);
   }
 
 }

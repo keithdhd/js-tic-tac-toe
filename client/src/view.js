@@ -4,7 +4,7 @@ var view = {
 
   setUp: function(board){
     this.container = document.querySelector('#app');
-    this.container.appendChild(document.createElement('ul'));
+    this.container.innerHTML = '';
 
     board.state.forEach((arr, index) => {
       this.arrayToRow(arr, board);
@@ -12,9 +12,9 @@ var view = {
 
   },
 
-  arrayToRow: function(arr, board){
+  arrayToRow: function(arr){
     var row = document.createElement('div');
-
+    console.log(arr);
     for(let element of arr){
       let span = document.createElement('span');
       span.className = 'square';
