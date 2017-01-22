@@ -1,8 +1,6 @@
 var controller = {
 
   currentPlayer: 'x',
-  view: null,
-  board: null,
 
   init: function(board, view, winChecker){
     this.view = view;
@@ -15,7 +13,7 @@ var controller = {
   onPlay: function(chosenSquare) {
     this.board.setState(this.currentPlayer, chosenSquare);
     this.view.render(this.board);
-    
+
     this.winChecker.checkForWin(this.board, function(){
       // console.log(this);
     }.bind(this));
