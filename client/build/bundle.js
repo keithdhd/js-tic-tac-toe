@@ -66,12 +66,14 @@
 	    for (var i = 0; i < boardSize * boardSize; i++) {
 	       this.state[i] = null;
 	     }
-	     console.log(this.state)
 	  },
 	
 	  setState: function(currentPlayer, chosenSquare){
-	    console.log(currentPlayer + " on " + chosenSquare);
-	    this.state[chosenSquare] = currentPlayer;
+	    if(!this.state[chosenSquare]){
+	      this.state[chosenSquare] = currentPlayer;
+	      return true;
+	    }
+	    return false;
 	  }
 	
 	}
@@ -95,14 +97,17 @@
 	  },
 	
 	  onPlay: function(chosenSquare) {
-	    this.board.setState(this.currentPlayer, chosenSquare);
-	    this.view.render(this.board);
+	    var validPlay = this.board.setState(this.currentPlayer, chosenSquare);
 	
-	    this.winChecker.checkForWin(this.board, function(){
-	      // console.log(this);
-	    }.bind(this));
+	    if(validPlay){
+	      this.view.render(this.board);
 	
-	    this.currentPlayer = this.switchPlayer(this.currentPlayer);
+	      this.winChecker.checkForWin(this.board, (winner, combo) => {
+	        this.view.showWin(winner, combo);
+	      });
+	
+	      this.currentPlayer = this.switchPlayer(this.currentPlayer);
+	    }
 	  },
 	
 	  switchPlayer: function(current){
@@ -142,7 +147,7 @@
 	  arrayToRows: function(arr){
 	    var squares = [];
 	    var boardSize = Math.sqrt(arr.length);
-	    var copy =  (JSON.parse(JSON.stringify(arr)));
+	    var copy = (JSON.parse(JSON.stringify(arr)));
 	
 	    while (copy.length > 0)
 	      squares.push(copy.splice(0, boardSize));
@@ -162,11 +167,23 @@
 	      span.className = 'square';
 	      span.setAttribute('data-index', (incr * boardSize + i));
 	      span.addEventListener('click', () => {
-	        this.onPlay((incr * boardSize + i));
+	        if(this.onPlay) this.onPlay((incr * boardSize + i));
 	      });
 	      row.appendChild(span);
 	    }
 	    return row;
+	  },
+	
+	  showWin: function(winner, combo){
+	    console.log("winner:", winner, "combo:", combo);
+	    this.onPlay = null;
+	
+	    var squares = this.container.querySelectorAll('span');
+	    
+	    for(var i=0; i<squares.length; i++){
+	      if(combo.includes(i)  )
+	        squares[i].classList.add('win');
+	    }
 	  }
 	
 	}
@@ -179,11 +196,47 @@
 
 	var winChecker = {
 	
-	  onWin: null,
+	  winningCombos: [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [6,4,2]],
 	
-	  checkForWin: function(board, cb){
+	  checkForWin: function(board, onWin){
 	    console.log("checking for win:");
-	    cb();
+	    var winner = null;
+	    const xSquares = this.getCombos(board, 'x');
+	    const oSquares = this.getCombos(board, 'o');
+	
+	    this.winningCombos.forEach((combo, index) => {
+	      if(this.checkCombo(xSquares, combo, Math.sqrt(board.state.length))){
+	        onWin('x', combo);
+	      }
+	      if(this.checkCombo(oSquares, combo, Math.sqrt(board.state.length))){
+	        onWin('o', combo);
+	      }
+	    });
+	  },
+	
+	  checkCombo: function(squares, winningCombo, size){
+	    var count = 0;
+	
+	    winningCombo.forEach(function(item, index){
+	      if(squares.includes(item)){
+	        count++;
+	      }
+	    });
+	
+	    if(count === size){  
+	      return true;
+	    }
+	    return false;
+	  },
+	
+	  getCombos: function(board, player){
+	    var filledSquares = [];
+	
+	    board.state.forEach(function(square, index){
+	      if(square === player) filledSquares.push(index);
+	    })
+	
+	    return filledSquares;
 	  }
 	
 	}

@@ -5,12 +5,14 @@ var board = {
     for (var i = 0; i < boardSize * boardSize; i++) {
        this.state[i] = null;
      }
-     console.log(this.state)
   },
 
   setState: function(currentPlayer, chosenSquare){
-    console.log(currentPlayer + " on " + chosenSquare);
-    this.state[chosenSquare] = currentPlayer;
+    if(!this.state[chosenSquare]){
+      this.state[chosenSquare] = currentPlayer;
+      return true;
+    }
+    return false;
   }
 
 }

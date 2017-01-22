@@ -18,7 +18,7 @@ var view = {
   arrayToRows: function(arr){
     var squares = [];
     var boardSize = Math.sqrt(arr.length);
-    var copy =  (JSON.parse(JSON.stringify(arr)));
+    var copy = (JSON.parse(JSON.stringify(arr)));
 
     while (copy.length > 0)
       squares.push(copy.splice(0, boardSize));
@@ -38,11 +38,23 @@ var view = {
       span.className = 'square';
       span.setAttribute('data-index', (incr * boardSize + i));
       span.addEventListener('click', () => {
-        this.onPlay((incr * boardSize + i));
+        if(this.onPlay) this.onPlay((incr * boardSize + i));
       });
       row.appendChild(span);
     }
     return row;
+  },
+
+  showWin: function(winner, combo){
+    console.log("winner:", winner, "combo:", combo);
+    this.onPlay = null;
+
+    var squares = this.container.querySelectorAll('span');
+    
+    for(var i=0; i<squares.length; i++){
+      if(combo.includes(i)  )
+        squares[i].classList.add('win');
+    }
   }
 
 }

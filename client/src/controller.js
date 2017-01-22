@@ -11,14 +11,17 @@ var controller = {
   },
 
   onPlay: function(chosenSquare) {
-    this.board.setState(this.currentPlayer, chosenSquare);
-    this.view.render(this.board);
+    var validPlay = this.board.setState(this.currentPlayer, chosenSquare);
 
-    this.winChecker.checkForWin(this.board, function(){
-      // console.log(this);
-    }.bind(this));
+    if(validPlay){
+      this.view.render(this.board);
 
-    this.currentPlayer = this.switchPlayer(this.currentPlayer);
+      this.winChecker.checkForWin(this.board, (winner, combo) => {
+        this.view.showWin(winner, combo);
+      });
+
+      this.currentPlayer = this.switchPlayer(this.currentPlayer);
+    }
   },
 
   switchPlayer: function(current){

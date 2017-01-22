@@ -21,8 +21,17 @@ body{
   height: 125px;
   border: 1px solid #e4e4e4;
   color: #e4e4e4;
-  font-size: 5em;
+  font-size: 7em;
   font-weight: 100;
   text-align: center;
-  padding: 20px;
+  line-height: 100px;
+}
+
+.square:hover{
+  transform: rotate(5deg);
+}
+
+.win{
+  background-color: #ff8000;
+  transition: width 2s, height 2s, background-color 2s, transform 1s;
 }
