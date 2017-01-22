@@ -2,22 +2,28 @@ var view = {
 
   onPlay: null,
 
-  setUp: function(board){
-    this.container = document.querySelector('#app');
-    this.container.innerHTML = '';
+  render: function(board){
+    var squares = this.container.children[0].children;
 
-    board.state.forEach((arr, index) => {
-      this.arrayToRow(arr, board);
-    })
-
+    for(var i=0; i<squares.length; i++){
+      if(typeof(board.state[i]) === 'string'){
+        squares[i].innerHTML = board.state[i];
+      }
+    }
   },
 
-  arrayToRow: function(arr){
+  setUp: function(board){
+    this.container = document.querySelector('#app');
+    this.arrayToRows(board.state);
+  },
+
+  arrayToRows: function(arr){
     var row = document.createElement('div');
-    console.log(arr);
+
     for(let element of arr){
       let span = document.createElement('span');
       span.className = 'square';
+
       span.setAttribute('data-index', element);
       span.addEventListener('click', () => {
         this.onPlay(element);
