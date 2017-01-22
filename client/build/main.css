@@ -1,5 +1,6 @@
 * {
   box-sizing : border-box;
+  cursor: pointer;
 }
 
 body{
@@ -32,6 +33,6 @@ body{
 }
 
 .win{
-  background-color: #ff8000;
+  background-color: FireBrick;
   transition: width 2s, height 2s, background-color 2s, transform 1s;
 }

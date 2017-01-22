@@ -61,6 +61,8 @@
 
 	var board = {
 	
+	  filledSquares: 0,
+	
 	  create: function(boardSize){
 	    this.state = [];
 	    for (var i = 0; i < boardSize * boardSize; i++) {
@@ -71,6 +73,7 @@
 	  setState: function(currentPlayer, chosenSquare){
 	    if(!this.state[chosenSquare]){
 	      this.state[chosenSquare] = currentPlayer;
+	      this.filledSquares++;
 	      return true;
 	    }
 	    return false;
@@ -105,6 +108,10 @@
 	      this.winChecker.checkForWin(this.board, (winner, combo) => {
 	        this.view.showWin(winner, combo);
 	      });
+	
+	      // if(this.board.filledSquares === this.board.state.length){
+	      //   alert("It's a trap!");
+	      // }
 	
 	      this.currentPlayer = this.switchPlayer(this.currentPlayer);
 	    }

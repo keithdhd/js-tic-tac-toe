@@ -20,6 +20,10 @@ var controller = {
         this.view.showWin(winner, combo);
       });
 
+      // if(this.board.filledSquares === this.board.state.length){
+      //   alert("It's a trap!");
+      // }
+
       this.currentPlayer = this.switchPlayer(this.currentPlayer);
     }
   },
