@@ -27,7 +27,6 @@ var view = {
       let row = this.createRow(squares[i], i, boardSize);
       this.container.appendChild(row);
     }
-
   },
 
   createRow: function(arr, incr, boardSize){
@@ -52,10 +51,20 @@ var view = {
     var squares = this.container.querySelectorAll('span');
     
     for(var i=0; i<squares.length; i++){
-      if(combo.includes(i)  )
+      if(combo.includes(i))
+        squares[i].classList.remove('draw');
         squares[i].classList.add('win');
     }
+  },
+
+  showDraw: function(){
+    var squares = this.container.querySelectorAll('span');
+    
+    for(var i=0; i<squares.length; i++){
+      squares[i].classList.add('draw');
+    }
   }
+
 
 }
 

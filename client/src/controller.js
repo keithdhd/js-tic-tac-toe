@@ -16,13 +16,9 @@ var controller = {
     if(validPlay){
       this.view.render(this.board);
 
-      this.winChecker.checkForWin(this.board, (winner, combo) => {
+      this.winChecker.checkForWin(this.board, this.view ,(winner, combo) => {
         this.view.showWin(winner, combo);
       });
-
-      // if(this.board.filledSquares === this.board.state.length){
-      //   alert("It's a trap!");
-      // }
 
       this.currentPlayer = this.switchPlayer(this.currentPlayer);
     }
@@ -35,6 +31,10 @@ var controller = {
     else{
       return 'x';
     };
+  },
+
+  checkForDraw: function(board){
+    return board.filledSquares === board.state.length;
   }
 
 }

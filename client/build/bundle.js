@@ -67,7 +67,7 @@
 	    this.state = [];
 	    for (var i = 0; i < boardSize * boardSize; i++) {
 	       this.state[i] = null;
-	     }
+	    }
 	  },
 	
 	  setState: function(currentPlayer, chosenSquare){
@@ -105,13 +105,9 @@
 	    if(validPlay){
 	      this.view.render(this.board);
 	
-	      this.winChecker.checkForWin(this.board, (winner, combo) => {
+	      this.winChecker.checkForWin(this.board, this.view ,(winner, combo) => {
 	        this.view.showWin(winner, combo);
 	      });
-	
-	      // if(this.board.filledSquares === this.board.state.length){
-	      //   alert("It's a trap!");
-	      // }
 	
 	      this.currentPlayer = this.switchPlayer(this.currentPlayer);
 	    }
@@ -124,6 +120,10 @@
 	    else{
 	      return 'x';
 	    };
+	  },
+	
+	  checkForDraw: function(board){
+	    return board.filledSquares === board.state.length;
 	  }
 	
 	}
@@ -163,7 +163,6 @@
 	      let row = this.createRow(squares[i], i, boardSize);
 	      this.container.appendChild(row);
 	    }
-	
 	  },
 	
 	  createRow: function(arr, incr, boardSize){
@@ -188,10 +187,20 @@
 	    var squares = this.container.querySelectorAll('span');
 	    
 	    for(var i=0; i<squares.length; i++){
-	      if(combo.includes(i)  )
+	      if(combo.includes(i))
+	        squares[i].classList.remove('draw');
 	        squares[i].classList.add('win');
 	    }
+	  },
+	
+	  showDraw: function(){
+	    var squares = this.container.querySelectorAll('span');
+	    
+	    for(var i=0; i<squares.length; i++){
+	      squares[i].classList.add('draw');
+	    }
 	  }
+	
 	
 	}
 	
@@ -205,16 +214,22 @@
 	
 	  winningCombos: [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [6,4,2]],
 	
-	  checkForWin: function(board, onWin){
+	  checkForWin: function(board, view, onWin){
 	    console.log("checking for win:");
-	    var winner = null;
+	
+	    if(board.filledSquares === board.state.length){
+	      console.log("FULL");
+	      view.showDraw();
+	    }
+	
 	    const xSquares = this.getCombos(board, 'x');
 	    const oSquares = this.getCombos(board, 'o');
 	
 	    this.winningCombos.forEach((combo, index) => {
 	      if(this.checkCombo(xSquares, combo, Math.sqrt(board.state.length))){
 	        onWin('x', combo);
-	      }
+	      };
+	        
 	      if(this.checkCombo(oSquares, combo, Math.sqrt(board.state.length))){
 	        onWin('o', combo);
 	      }

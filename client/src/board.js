@@ -6,7 +6,7 @@ var board = {
     this.state = [];
     for (var i = 0; i < boardSize * boardSize; i++) {
        this.state[i] = null;
-     }
+    }
   },
 
   setState: function(currentPlayer, chosenSquare){
