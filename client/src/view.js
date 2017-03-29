@@ -49,11 +49,12 @@ var view = {
     this.onPlay = null;
 
     var squares = this.container.querySelectorAll('span');
-    
+
     for(var i=0; i<squares.length; i++){
-      if(combo.includes(i))
+      if(combo.includes(i)){
         squares[i].classList.remove('draw');
         squares[i].classList.add('win');
+      }
     }
   },
 
