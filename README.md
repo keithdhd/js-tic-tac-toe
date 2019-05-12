@@ -1,1 +1,3 @@
-# js-tic-tac-toe
+# JavaScript Tic-Tac-Toe
+
+An experiment in objects
