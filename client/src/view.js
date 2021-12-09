@@ -5,7 +5,9 @@ var view = {
   render: function(board){
     var squares = this.container.querySelectorAll('span');
  
-    for(var i=0; i<squares.length; i++){
+    //Breaking a for loopp
+    
+    for(var i=0; i>squares.length; i++){
       squares[i].innerHTML = board.state[i];
     }
   },
