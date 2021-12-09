@@ -4,6 +4,7 @@ var board = {
 
   create: function(boardSize){
     this.state = [];
+    console.log("Testing", this.state)
     for (var i = 0; i < boardSize * boardSize; i++) {
        this.state[i] = null;
     }
